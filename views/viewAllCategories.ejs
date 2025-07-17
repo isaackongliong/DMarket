@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Booklink</title>
+</head>
+<body>
+
+    <%- include ('partials/navbar.ejs') %>
+    <div class="container">
+      <div class="text-center"><h2>Categories</h2></div>
+      <% if (sessionUser && sessionUser.userRole === 'admin') { %>    
+      <div class="text-left"><a href="/addCategory">Add new category</a></div>
+      <% } %>
+      <br>
+      <table class="table table-hover small text-center">
+        <thead>
+            <tr>
+              <th width="50">Image</th>
+              <th width="100">Category Name</th>
+              <th width="100">Description</th>    
+              <% if (sessionUser && sessionUser.userRole === 'admin') { %>         
+              <th width="50">Edit</th>
+              <th width="50">Delete</th>
+              <% } %>
+            </tr>
+        </thead>
+        <tbody>
+          <% for(let i=0; i < categories.length; i++) { %>
+            <tr>
+              <td><img src = "images/<%= categories[i].categoryImage %>" width="80%"></td>
+              <td><a href="/category/<%= categories[i].categoryId %>/products" ><%= categories[i].categoryName %></a></td>             
+              <td><%= categories[i].categoryDescription %></td>
+              <% if (sessionUser && sessionUser.userRole === 'admin') { %>
+              <!-- Edit Link -->
+              <td><a href="/editCategory/<%= categories[i].categoryId %>">Edit</a></td>
+              <!-- Delete Link -->
+              <td><a href="/deleteCategory/<%= categories[i].categoryId %>" onclick="return confirm('Are you sure you want to delete this category?')">Delete</a></td>
+              <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <title>Booklink - Update product</title>
+    </head>
+<body>
+
+    <%- include ('partials/navbar.ejs') %>
+    <div class="container">
+        <br>
+        <div class="text-center"><h2>Update Product</h2></div>
+        <br>
+        <div class="text-center">
+            <form action="/editProduct/<%=product.productId%>" method="POST" enctype="multipart/form-data">
+                <label for="productName">Product Name:</label><br>
+                <input type="text" id="productName" name="productName" value="<%=product.productName%>" required><br><br>
+
+                <label for="productDescription">Product Description:</label><br>
+                <input type="text" id="productDescription" name="productDescription" value="<%=product.productDescription%>" required><br><br>
+
+                <label for="categoryId">Product Category:</label><br>
+                <select name="categoryId" id="categoryId">
+                    <option value="-">Select Category</option>
+                    <% categories.forEach(category => { %>
+                        <option value="<%= category.categoryId %>" <%= category.categoryId === product.categoryId ? 'selected' : '' %> >
+                            <%=category.categoryName %>
+                          </option>
+                    <% }) %>
+                  </select>
+                  <br><br>
+                <label for="productPrice">Product Price:</label><br>
+                <input type="number" step="0.01" min="0" id="productPrice" name="productPrice" value="<%=product.productPrice%>" required><br><br>
+
+                <label for="productStock">Product Stock:</label><br>
+                <input type="number" id="productStock" name="productStock" value="<%=product.productStock%>" required><br><br>
+
+
+                <label for="image">Current Image:</label><br>
+                <input type="hidden" name="currentImage" value = <%= product.productImage %> ><br>
+                <img src = "/images/<%= product.productImage %>" width="20%"><br><br>
+                
+                <label for="productImage">New Image:</label><br>
+                <input type="file" id="productImage" name="productImage" accept="image/*" ><br><br>
+
+                <button type="submit">Update Product</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
